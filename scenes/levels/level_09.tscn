@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://dlevel05"]
+[gd_scene load_steps=5 format=3 uid="uid://dlevel09"]
 
-[ext_resource type="Script" path="res://scripts/level_05.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/level_09.gd" id="1_level"]
 [ext_resource type="PackedScene" uid="uid://dplayer001" path="res://scenes/player/player.tscn" id="2_player"]
-[ext_resource type="Script" path="res://scripts/door.gd" id="3_door"]
+[ext_resource type="Script" path="res://scripts/button_interactive.gd" id="3_button"]
+[ext_resource type="Script" path="res://scripts/door.gd" id="4_door"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(1280, 40)
@@ -13,7 +14,17 @@ size = Vector2(100, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(60, 100)
 
-[node name="Level05" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(60, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_box"]
+size = Vector2(60, 60)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_box"]
+friction = 0.8
+bounce = 0.0
+
+[node name="Level09" type="Node2D"]
 script = ExtResource("1_level")
 
 [node name="Ground" type="StaticBody2D" parent="."]
@@ -34,10 +45,43 @@ color = Color(0.2, 0.2, 0.2, 1)
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(150, 610)
 
-[node name="Button" type="Area2D" parent="."]
-position = Vector2(640, 640)
+[node name="TriggerZone" type="Area2D" parent="."]
+position = Vector2(500, 610)
 collision_layer = 4
 collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerZone"]
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="Box" type="RigidBody2D" parent="."]
+position = Vector2(500, 600)
+collision_layer = 3
+collision_mask = 3
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_box")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box"]
+shape = SubResource("RectangleShape2D_box")
+
+[node name="BoxRect" type="ColorRect" parent="Box"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+color = Color(0.5, 0.4, 0.3, 1)
+
+[node name="BoxInner" type="ColorRect" parent="Box"]
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+color = Color(0.6, 0.5, 0.4, 1)
+
+[node name="Button" type="Area2D" parent="."]
+position = Vector2(350, 640)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("3_button")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Button"]
 position = Vector2(0, -15)
@@ -59,7 +103,7 @@ color = Color(0.4, 0.4, 0.4, 1)
 
 [node name="Door" type="Node2D" parent="."]
 position = Vector2(1130, 560)
-script = ExtResource("3_door")
+script = ExtResource("4_door")
 
 [node name="DoorFrame" type="ColorRect" parent="Door"]
 offset_left = -40.0
@@ -83,40 +127,5 @@ collision_mask = 1
 position = Vector2(0, 50)
 shape = SubResource("RectangleShape2D_door")
 
-[node name="Indicators" type="Node2D" parent="Door"]
-position = Vector2(0, -30)
-
-[node name="Light1" type="ColorRect" parent="Door/Indicators"]
-offset_left = -30.0
-offset_top = 0.0
-offset_right = -20.0
-offset_bottom = 12.0
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Light2" type="ColorRect" parent="Door/Indicators"]
-offset_left = -17.0
-offset_top = 0.0
-offset_right = -7.0
-offset_bottom = 12.0
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Light3" type="ColorRect" parent="Door/Indicators"]
-offset_left = -5.0
-offset_top = 0.0
-offset_right = 5.0
-offset_bottom = 12.0
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Light4" type="ColorRect" parent="Door/Indicators"]
-offset_left = 7.0
-offset_top = 0.0
-offset_right = 17.0
-offset_bottom = 12.0
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="Light5" type="ColorRect" parent="Door/Indicators"]
-offset_left = 20.0
-offset_top = 0.0
-offset_right = 30.0
-offset_bottom = 12.0
-color = Color(0.2, 0.2, 0.2, 1)
+[connection signal="body_entered" from="Button" to="Button" method="_on_body_entered"]
+[connection signal="body_exited" from="Button" to="Button" method="_on_body_exited"]

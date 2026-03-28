@@ -1,0 +1,255 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlevel10"]
+
+[ext_resource type="Script" path="res://scripts/level_10.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://dplayer001" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/button_interactive.gd" id="3_button"]
+[ext_resource type="Script" path="res://scripts/door.gd" id="4_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_start"]
+size = Vector2(200, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step1"]
+size = Vector2(120, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step2"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step3"]
+size = Vector2(80, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(150, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bridge"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_end"]
+size = Vector2(180, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_button"]
+size = Vector2(80, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(60, 100)
+
+[node name="Level10" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Background" type="ColorRect" parent="."]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.02, 0.02, 0.03, 1)
+
+[node name="StartPlatform" type="StaticBody2D" parent="."]
+position = Vector2(100, 680)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartPlatform"]
+shape = SubResource("RectangleShape2D_start")
+
+[node name="Rect" type="ColorRect" parent="StartPlatform"]
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Step1" type="StaticBody2D" parent="."]
+position = Vector2(280, 620)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Step1"]
+shape = SubResource("RectangleShape2D_step1")
+
+[node name="Rect" type="ColorRect" parent="Step1"]
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 10.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Step2" type="StaticBody2D" parent="."]
+position = Vector2(420, 550)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Step2"]
+shape = SubResource("RectangleShape2D_step2")
+
+[node name="Rect" type="ColorRect" parent="Step2"]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Step3" type="StaticBody2D" parent="."]
+position = Vector2(550, 480)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Step3"]
+shape = SubResource("RectangleShape2D_step3")
+
+[node name="Rect" type="ColorRect" parent="Step3"]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 10.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="HighPlatform" type="StaticBody2D" parent="."]
+position = Vector2(700, 420)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HighPlatform"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Rect" type="ColorRect" parent="HighPlatform"]
+offset_left = -75.0
+offset_top = -10.0
+offset_right = 75.0
+offset_bottom = 10.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Bridge" type="StaticBody2D" parent="."]
+position = Vector2(880, 480)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bridge"]
+shape = SubResource("RectangleShape2D_bridge")
+
+[node name="Rect" type="ColorRect" parent="Bridge"]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="EndPlatform" type="StaticBody2D" parent="."]
+position = Vector2(1100, 560)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndPlatform"]
+shape = SubResource("RectangleShape2D_end")
+
+[node name="Rect" type="ColorRect" parent="EndPlatform"]
+offset_left = -90.0
+offset_top = -20.0
+offset_right = 90.0
+offset_bottom = 20.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(100, 610)
+
+[node name="PlayerGlow" type="Node2D" parent="."]
+position = Vector2(100, 585)
+
+[node name="Outer" type="ColorRect" parent="PlayerGlow"]
+offset_left = -120.0
+offset_top = -100.0
+offset_right = 120.0
+offset_bottom = 100.0
+color = Color(1, 0.98, 0.95, 0.04)
+
+[node name="Inner" type="ColorRect" parent="PlayerGlow"]
+offset_left = -70.0
+offset_top = -60.0
+offset_right = 70.0
+offset_bottom = 60.0
+color = Color(1, 0.98, 0.95, 0.08)
+
+[node name="Core" type="ColorRect" parent="PlayerGlow"]
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+color = Color(1, 0.98, 0.95, 0.12)
+
+[node name="Button" type="Area2D" parent="."]
+position = Vector2(700, 400)
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("3_button")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_button")
+
+[node name="ButtonGlow" type="ColorRect" parent="Button"]
+offset_left = -80.0
+offset_top = -60.0
+offset_right = 80.0
+offset_bottom = 40.0
+color = Color(0.8, 0.2, 0.2, 0.2)
+
+[node name="ButtonBase" type="ColorRect" parent="Button"]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="ButtonTop" type="ColorRect" parent="Button"]
+offset_left = -40.0
+offset_top = -25.0
+offset_right = 40.0
+offset_bottom = -10.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="Door" type="Node2D" parent="."]
+position = Vector2(1150, 440)
+script = ExtResource("4_door")
+
+[node name="DoorFrame" type="ColorRect" parent="Door"]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 110.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="DoorPanel" type="ColorRect" parent="Door"]
+offset_left = -35.0
+offset_top = 0.0
+offset_right = 35.0
+offset_bottom = 100.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="TriggerArea" type="Area2D" parent="Door"]
+collision_layer = 4
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door/TriggerArea"]
+position = Vector2(0, 50)
+shape = SubResource("RectangleShape2D_door")
+
+[node name="DoorGlow" type="Node2D" parent="."]
+position = Vector2(1150, 490)
+
+[node name="Outer" type="ColorRect" parent="DoorGlow"]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0.9, 1, 0.9, 0.03)
+
+[node name="Inner" type="ColorRect" parent="DoorGlow"]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = 60.0
+color = Color(0.9, 1, 0.9, 0.06)
+
+[connection signal="body_entered" from="Button" to="Button" method="_on_body_entered"]
+[connection signal="body_exited" from="Button" to="Button" method="_on_body_exited"]
