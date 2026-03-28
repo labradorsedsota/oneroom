@@ -28,7 +28,7 @@ theme_override_font_sizes/font_size = 24
 text = "\"Under Pressure\""
 
 [node name="LevelLabel" type="Label" parent="UI"]
-offset_left = 1200.0
+offset_left = 1180.0
 offset_top = 20.0
 offset_right = 1260.0
 offset_bottom = 60.0
@@ -36,3 +36,13 @@ theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
 theme_override_font_sizes/font_size = 20
 text = "L1"
 horizontal_alignment = 2
+
+[node name="TimerLabel" type="Label" parent="UI"]
+offset_left = 580.0
+offset_top = 20.0
+offset_right = 700.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 28
+text = "30"
+horizontal_alignment = 1
