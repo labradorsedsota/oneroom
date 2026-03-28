@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlevel06"]
+[gd_scene format=3 uid="uid://dlevel06"]
 
 [ext_resource type="Script" path="res://scripts/level_06.gd" id="1_level"]
 [ext_resource type="PackedScene" uid="uid://dplayer001" path="res://scenes/player/player.tscn" id="2_player"]
@@ -6,10 +6,10 @@
 [ext_resource type="Script" path="res://scripts/door.gd" id="4_door"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
-size = Vector2(400, 40)
+size = Vector2(1280, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
-size = Vector2(120, 20)
+size = Vector2(160, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_button"]
 size = Vector2(80, 20)
@@ -24,7 +24,7 @@ script = ExtResource("1_level")
 position = Vector2(640, 360)
 
 [node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(200, 680)
+position = Vector2(640, 680)
 collision_layer = 2
 collision_mask = 0
 
@@ -32,14 +32,14 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_ground")
 
 [node name="GroundRect" type="ColorRect" parent="Ground"]
-offset_left = -200.0
+offset_left = -640.0
 offset_top = -20.0
-offset_right = 200.0
+offset_right = 640.0
 offset_bottom = 20.0
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Platform" type="StaticBody2D" parent="."]
-position = Vector2(640, 600)
+position = Vector2(640, 610)
 collision_layer = 2
 collision_mask = 0
 
@@ -47,32 +47,17 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_platform")
 
 [node name="PlatformRect" type="ColorRect" parent="Platform"]
-offset_left = -60.0
+offset_left = -80.0
 offset_top = -10.0
-offset_right = 60.0
+offset_right = 80.0
 offset_bottom = 10.0
 color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="GroundRight" type="StaticBody2D" parent="."]
-position = Vector2(1080, 680)
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundRight"]
-shape = SubResource("RectangleShape2D_ground")
-
-[node name="GroundRect" type="ColorRect" parent="GroundRight"]
-offset_left = -200.0
-offset_top = -20.0
-offset_right = 200.0
-offset_bottom = 20.0
-color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(100, 610)
 
 [node name="Button" type="Area2D" parent="."]
-position = Vector2(640, 580)
+position = Vector2(640, 590)
 collision_layer = 4
 collision_mask = 1
 script = ExtResource("3_button")

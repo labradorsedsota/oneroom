@@ -1,1 +1,3 @@
 res://scripts/door.gd
+res://scripts/button_interactive.gd
+res://scripts/player.gd
