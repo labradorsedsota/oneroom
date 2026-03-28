@@ -12,6 +12,8 @@ func _ready() -> void:
 		player.reset_physics()
 		# Flip gravity direction (negative = upward)
 		player.gravity_direction = -1.0
+		# Tell Godot that "floor" is now UP (ceiling)
+		player.up_direction = Vector2.DOWN
 		# Flip player sprite vertically
 		_flip_player_visual()
 

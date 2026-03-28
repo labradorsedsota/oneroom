@@ -50,6 +50,7 @@ func reset_physics() -> void:
 	friction = DEFAULT_FRICTION
 	gravity_direction = 1.0
 	friction_mode = false
+	up_direction = Vector2.UP
 
 	# Reset visual flip
 	if body_rect:
