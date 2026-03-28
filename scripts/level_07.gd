@@ -12,10 +12,12 @@ func _ready() -> void:
 		player.reset_physics()
 		# Flip gravity direction (negative = upward)
 		player.gravity_direction = -1.0
-		# Tell Godot that "floor" is now UP (ceiling)
+		# Tell Godot that "floor" is now the ceiling
 		player.up_direction = Vector2.DOWN
+		# Enable floor snapping for better ceiling contact
+		player.floor_snap_length = 10.0
 		# Flip player sprite vertically
-		_flip_player_visual()
+		player.scale.y = -1
 
 	# Connect button to door
 	if button:
@@ -24,19 +26,6 @@ func _ready() -> void:
 	# Connect door entry to level completion
 	if door:
 		door.player_entered.connect(_on_player_entered_door)
-
-func _flip_player_visual() -> void:
-	# Flip the player's visual components upside down
-	var body_rect = player.get_node_or_null("BodyRect")
-	var head_rect = player.get_node_or_null("HeadRect")
-
-	if body_rect:
-		body_rect.scale.y = -1
-		# Adjust position to account for flip
-		body_rect.position.y = -body_rect.position.y
-	if head_rect:
-		head_rect.scale.y = -1
-		head_rect.position.y = -head_rect.position.y
 
 func _on_button_pressed() -> void:
 	door.open_door()

@@ -33,7 +33,7 @@ offset_bottom = 20.0
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(150, 110)
+position = Vector2(150, 400)
 
 [node name="Button" type="Area2D" parent="."]
 position = Vector2(640, 80)

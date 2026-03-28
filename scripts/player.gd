@@ -51,12 +51,8 @@ func reset_physics() -> void:
 	gravity_direction = 1.0
 	friction_mode = false
 	up_direction = Vector2.UP
-
-	# Reset visual flip
-	if body_rect:
-		body_rect.scale.y = abs(body_rect.scale.y)
-	if head_rect:
-		head_rect.scale.y = abs(head_rect.scale.y)
+	floor_snap_length = 1.0
+	scale = Vector2(1, 1)
 
 func _physics_process(delta: float) -> void:
 	var on_floor_now = is_on_floor()
