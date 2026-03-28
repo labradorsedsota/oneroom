@@ -21,6 +21,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="OneRoom"
+
 [input]
 
 move_left={
@@ -44,7 +48,3 @@ jump={
 2d_physics/layer_1="player"
 2d_physics/layer_2="ground"
 2d_physics/layer_3="interactive"
-
-[rendering]
-
-renderer/rendering_method="forward_plus"

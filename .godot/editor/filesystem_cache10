@@ -1,0 +1,16 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1774685008
+icon.svg::CompressedTexture2D::2734666903781972824::1774684830::1774685012::1::::<><><>0<>0<>ffb852e1e668ff5d05ac459467a4e6f6<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+spec.md::TextFile::-1::1774684651::0::1::::<><><>0<>0<><>::
+::res://scenes/::1774684809
+main.tscn::PackedScene::176118934840::1774684809::0::1::::<><><>0<>0<><>::res://scripts/level_manager.gd
+::res://scenes/levels/::1774684825
+level_01.tscn::PackedScene::174772874568::1774684825::0::1::::<><><>0<>0<><>::res://scripts/level_01.gd<>uid://dplayer001::::res://scenes/player/player.tscn<>res://scripts/button_interactive.gd<>res://scripts/door.gd
+::res://scenes/player/::1774684805
+player.tscn::PackedScene::209516740217880::1774684805::0::1::::<><><>0<>0<><>::res://scripts/player.gd
+::res://scripts/::1774684815
+button_interactive.gd::GDScript::1134085924737545860::1774684790::0::1::::<>Area2D<><>0<>0<><>::
+door.gd::GDScript::4110475363543531656::1774684797::0::1::::<>Node2D<><>0<>0<><>::
+level_01.gd::GDScript::8494378188868626224::1774684815::0::1::::<>Node2D<><>0<>0<><>::
+level_manager.gd::GDScript::6870558085600244786::1774684784::0::1::::<>Node2D<><>0<>0<><>::
+player.gd::GDScript::7086192012155150203::1774684774::0::1::::<>CharacterBody2D<><>0<>0<><>::
