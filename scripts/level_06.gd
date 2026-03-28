@@ -16,8 +16,8 @@ func _ready() -> void:
 		# Heavy: 3x gravity, 0.5x speed
 		player.gravity_scale = 3.0
 		player.speed_multiplier = 0.5
-		# Lower jump due to heavy gravity
-		player.jump_velocity_override = -300.0
+		# Lower jump but still usable (max height ~51px vs normal ~103px)
+		player.jump_velocity_override = -550.0
 		# Connect landing for screen shake
 		player.landed.connect(_on_player_landed)
 
