@@ -14,6 +14,7 @@ signal player_entered
 var is_open: bool = false
 var is_locked: bool = false
 var original_panel_position: Vector2
+var door_blocker: StaticBody2D = null
 
 # Colors
 const COLOR_DOOR_CLOSED = Color(0.3, 0.3, 0.3)  # Dark gray
@@ -30,15 +31,35 @@ func _ready() -> void:
 	if door_frame:
 		door_frame.color = COLOR_FRAME
 
+	# Create physical blocker for closed door
+	_create_blocker()
+
 	# Connect trigger area
 	if trigger_area:
 		trigger_area.body_entered.connect(_on_trigger_body_entered)
+
+func _create_blocker() -> void:
+	door_blocker = StaticBody2D.new()
+	door_blocker.collision_layer = 2  # Same as walls/ground
+	door_blocker.collision_mask = 0
+	var shape = CollisionShape2D.new()
+	var rect = RectangleShape2D.new()
+	rect.size = Vector2(20, 100)  # Thin blocker matching door panel height
+	shape.shape = rect
+	shape.position = Vector2(0, 50)
+	door_blocker.add_child(shape)
+	add_child(door_blocker)
 
 func open_door() -> void:
 	if is_open or is_locked:
 		return
 
 	is_open = true
+
+	# Remove blocker so player can enter
+	if door_blocker:
+		door_blocker.queue_free()
+		door_blocker = null
 
 	# Animate door sliding up
 	var tween = create_tween()
@@ -52,6 +73,10 @@ func close_door() -> void:
 		return
 
 	is_open = false
+
+	# Re-create blocker
+	if not door_blocker:
+		_create_blocker()
 
 	var tween = create_tween()
 	tween.tween_property(door_panel, "position:y", original_panel_position.y, open_duration)

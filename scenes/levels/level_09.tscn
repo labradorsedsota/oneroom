@@ -12,7 +12,7 @@ size = Vector2(1280, 40)
 size = Vector2(100, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(60, 100)
+size = Vector2(30, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(60, 100)
