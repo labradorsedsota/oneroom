@@ -15,15 +15,20 @@ signal button_released
 var is_pressed: bool = false
 var original_top_position: Vector2
 var bodies_on_button: Array[Node2D] = []
+var solid_body: StaticBody2D = null
 
 # Colors
 const COLOR_INACTIVE = Color(0.4, 0.4, 0.4)  # Gray
 const COLOR_ACTIVE = Color(0.8, 0.2, 0.2)    # Red
 
+# Margin for the trigger zone extension (must be >= player half-width 15px)
+const TRIGGER_MARGIN: float = 30.0
+
 func _ready() -> void:
 	if button_top:
 		original_top_position = button_top.position
 		button_top.color = COLOR_INACTIVE
+	_create_solid_collision()
 
 func _physics_process(_delta: float) -> void:
 	# For require_stopped mode, check velocity each frame
@@ -87,3 +92,50 @@ func _release_button() -> void:
 	tween.tween_property(button_top, "position:y", original_top_position.y, press_duration)
 
 	button_released.emit()
+
+## Solid collision: prevents player from passing through the button
+func _create_solid_collision() -> void:
+	if not button_base or not button_top:
+		return
+
+	# Calculate full button bounds from visual elements
+	var min_x = min(button_base.offset_left, button_top.offset_left)
+	var max_x = max(button_base.offset_right, button_top.offset_right)
+	var min_y = min(button_base.offset_top, button_top.offset_top)
+	var max_y = max(button_base.offset_bottom, button_top.offset_bottom)
+
+	var width = max_x - min_x
+	var height = max_y - min_y
+	var center_x = (min_x + max_x) / 2.0
+	var center_y = (min_y + max_y) / 2.0
+
+	# --- 1. Create StaticBody2D so the player can't walk/fall through ---
+	solid_body = StaticBody2D.new()
+	# Use layer 3 (value 4) instead of ground layer 2:
+	# Player collision_mask=6 (layers 2+3) → collides with button ✓
+	# RigidBody boxes (mask=3, layers 1+2) → pass through button ✓ (needed for L9)
+	solid_body.collision_layer = 4
+	solid_body.collision_mask = 0
+
+	var solid_shape = RectangleShape2D.new()
+	solid_shape.size = Vector2(width, height)
+
+	var solid_col = CollisionShape2D.new()
+	solid_col.shape = solid_shape
+	solid_col.position = Vector2(center_x, center_y)
+
+	solid_body.add_child(solid_col)
+	add_child(solid_body)
+
+	# --- 2. Extend the Area2D trigger zone so it detects the player ---
+	# standing on top / touching the side of the solid body.
+	# We add TRIGGER_MARGIN in every direction beyond the solid body bounds.
+	var trigger = $CollisionShape2D
+	if trigger:
+		var new_trigger_shape = RectangleShape2D.new()
+		new_trigger_shape.size = Vector2(
+			width + TRIGGER_MARGIN * 2,
+			height + TRIGGER_MARGIN * 2
+		)
+		trigger.shape = new_trigger_shape
+		trigger.position = Vector2(center_x, center_y)

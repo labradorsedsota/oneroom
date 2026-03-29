@@ -37,6 +37,9 @@ func _ready() -> void:
 	# Get indicator lights
 	_setup_indicators()
 
+	# Add solid collision to button so player can stand on it
+	_create_button_collision()
+
 func _setup_indicators() -> void:
 	indicator_lights.clear()
 	if indicators:
@@ -122,3 +125,43 @@ func _open_door_with_bounce() -> void:
 
 func _on_player_entered_door() -> void:
 	level_complete.emit()
+
+func _create_button_collision() -> void:
+	var button_base_node = button.get_node_or_null("ButtonBase")
+	var button_top_node = button.get_node_or_null("ButtonTop")
+	if not button_base_node or not button_top_node:
+		return
+
+	var min_x = min(button_base_node.offset_left, button_top_node.offset_left)
+	var max_x = max(button_base_node.offset_right, button_top_node.offset_right)
+	var min_y = min(button_base_node.offset_top, button_top_node.offset_top)
+	var max_y = max(button_base_node.offset_bottom, button_top_node.offset_bottom)
+
+	var width = max_x - min_x
+	var height = max_y - min_y
+	var center_x = (min_x + max_x) / 2.0
+	var center_y = (min_y + max_y) / 2.0
+
+	# Solid body: layer 3 (value 4) — player mask=6 includes it, boxes don't
+	var solid = StaticBody2D.new()
+	solid.collision_layer = 4
+	solid.collision_mask = 0
+
+	var shape = RectangleShape2D.new()
+	shape.size = Vector2(width, height)
+
+	var col = CollisionShape2D.new()
+	col.shape = shape
+	col.position = Vector2(center_x, center_y)
+
+	solid.add_child(col)
+	button.add_child(solid)
+
+	# Extend trigger zone with margin
+	var trigger_margin := 30.0
+	var trigger = button.get_node_or_null("CollisionShape2D")
+	if trigger:
+		var new_shape = RectangleShape2D.new()
+		new_shape.size = Vector2(width + trigger_margin * 2, height + trigger_margin * 2)
+		trigger.shape = new_shape
+		trigger.position = Vector2(center_x, center_y)
