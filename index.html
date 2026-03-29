@@ -109,6 +109,27 @@ body {
 			<div id="status-notice"></div>
 		</div>
 
+		<script>
+		// Transparent gzip decompression for .wasm and .pck files
+		// Downloads smaller .gz files and decompresses in browser
+		(function() {
+			const _fetch = window.fetch;
+			window.fetch = function(url, ...args) {
+				const u = typeof url === 'string' ? url : (url && url.url) || '';
+				if (u.endsWith('.wasm') || u.endsWith('.pck')) {
+					return _fetch(u + '.gz', ...args).then(function(r) {
+						if (!r.ok || !r.body) return _fetch(url, ...args);
+						var ds = new DecompressionStream('gzip');
+						var body = r.body.pipeThrough(ds);
+						var headers = new Headers(r.headers);
+						if (u.endsWith('.wasm')) headers.set('content-type', 'application/wasm');
+						return new Response(body, { headers: headers, status: r.status });
+					}).catch(function() { return _fetch(url, ...args); });
+				}
+				return _fetch(url, ...args);
+			};
+		})();
+		</script>
 		<script src="index.js"></script>
 		<script>
 const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":73552,"index.wasm":37685705},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
